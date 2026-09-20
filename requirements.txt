@@ -1,0 +1,22 @@
+# Core — needed for `run --mock --scorer keyword` (no API key required).
+requests>=2.31
+PyYAML>=6.0
+
+# Only needed if you point a stage at Anthropic (the default provider).
+# Gemini, Groq, OpenAI-compatible and Ollama all go over plain `requests`,
+# so you can delete this line and still use those.
+anthropic>=0.40
+
+# Tests
+pytest>=8.0
+# Channel publishing uses requests already listed above.
+
+# Instagram banner rendering
+Pillow>=10.0
+
+# Public image hosting for Instagram
+cloudinary>=1.44
+
+fastapi>=0.115
+
+uvicorn[standard]>=0.34

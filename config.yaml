@@ -1,0 +1,387 @@
+# jobhunt configuration. Everything tunable lives here — no editing Python.
+#
+# Tune `filters` first. It is deterministic, free, and it is what keeps the
+# LLM bill small: roughly 2000 raw postings -> 40 candidates before a single
+# token is spent.
+
+filters:
+
+  # Title regexes, matched case-insensitively against the job title only.
+  # A title must match at least one include AND zero excludes.
+  #
+  # Gotcha: "sde" as a bare regex does NOT match "Software Development
+  # Engineer" — different words entirely. Use \bsde\b for the acronym and
+  # list the spelled-out variants separately, as below.
+
+  include_titles:
+
+    # Core software engineering roles
+    - '\bsoftware engineer\b'
+    - '\bsoftware developer\b'
+    - '\bsoftware development engineer\b'
+    - '\bsde\b'
+    - '\bsde\s*-?\s*(i{1,3}|[123])\b'
+    - '\bassociate software engineer\b'
+    - '\bassociate software developer\b'
+    - '\bjunior software engineer\b'
+    - '\bjunior software developer\b'
+    - '\bgraduate software engineer\b'
+    - '\bgraduate software developer\b'
+    - '\bentry[- ]level software engineer\b'
+    - '\bentry[- ]level software developer\b'
+
+    # Java roles — strongest match for your resume
+    - '\bjava engineer\b'
+    - '\bjava software engineer\b'
+    - '\bjava developer\b'
+    - '\bjava backend engineer\b'
+    - '\bjava backend developer\b'
+    - '\bjava full[- ]stack engineer\b'
+    - '\bjava full[- ]stack developer\b'
+    - '\bjava software developer\b'
+
+    # Reliability / infrastructure roles
+    - '\bsite reliability engineer\b'
+
+    # Backend roles
+    - '\bbackend engineer\b'
+    - '\bback[- ]end engineer\b'
+    - '\bbackend developer\b'
+    - '\bback[- ]end developer\b'
+    - '\bbackend software engineer\b'
+    - '\bbackend software developer\b'
+    - '\bserver[- ]side engineer\b'
+    - '\bserver[- ]side developer\b'
+
+    # Spring / Spring Boot roles
+    - '\bspring boot engineer\b'
+    - '\bspring boot developer\b'
+    - '\bspring engineer\b'
+    - '\bspring developer\b'
+    - '\bspring boot software engineer\b'
+    - '\bspring boot software developer\b'
+
+    # Full-stack roles — Java + Angular + JavaScript/TypeScript
+    - '\bfull[- ]stack engineer\b'
+    - '\bfull[- ]stack developer\b'
+    - '\bfullstack engineer\b'
+    - '\bfullstack developer\b'
+    - '\bfull[- ]stack software engineer\b'
+    - '\bfull[- ]stack software developer\b'
+
+    # Application / web development
+    - '\bapplication engineer\b'
+    - '\bapplication developer\b'
+    - '\bsoftware application engineer\b'
+    - '\bweb application engineer\b'
+    - '\bweb application developer\b'
+    - '\bweb developer\b'
+    - '\bweb engineer\b'
+
+    # API / service development
+    - '\bapi engineer\b'
+    - '\bapi developer\b'
+    - '\brest api engineer\b'
+    - '\brest api developer\b'
+    - '\bservice engineer\b'
+    - '\bservice developer\b'
+
+  # Anything matching these is dropped even if an include matched.
+  exclude_titles:
+    - '\b(staff|principal|distinguished|fellow|architect)\b'
+    - '\bsenior\b'
+    - '\b(director|vp|vice president|head of|chief|cto)\b'
+    - '\b(manager|management)\b'
+    - '\b(intern|internship|apprentice|trainee)\b'
+    - '\b(sales|account executive|marketing|recruit|support|success)\b'
+    - '\b(frontend|front-end|ios|android|mobile|game|designer)\b'
+    - '\b(data scientist|machine learning scientist|research scientist)\b'
+
+  # Substrings matched against "<location> <title>", case-insensitive.
+  #
+  # This list covers Indian locations and common location names.
+  locations:
+
+    # Country / nationwide
+    - india
+    - pan india
+    - all india
+    - anywhere in india
+    - across india
+    - throughout india
+    - remote india
+    - remote - india
+    - work from home
+
+    # Karnataka
+    - bangalore
+    - bengaluru
+    - mysore
+    - mysuru
+    - mangalore
+    - mangaluru
+    - hubli
+    - hubballi
+    - belgaum
+    - belagavi
+    - tumkur
+    - tumakuru
+    - manipal
+
+    # Maharashtra
+    - mumbai
+    - pune
+    - nagpur
+    - nashik
+    - aurangabad
+    - chhatrapati sambhajinagar
+    - navi mumbai
+    - thane
+    - vasai
+    - virar
+    - kolhapur
+    - solapur
+    - amravati
+
+    # Telangana
+    - hyderabad
+    - secunderabad
+    - warangal
+    - karimnagar
+    - nizamabad
+
+    # Tamil Nadu
+    - chennai
+    - coimbatore
+    - madurai
+    - tiruchirappalli
+    - trichy
+    - salem
+    - tiruppur
+    - erode
+    - vellore
+    - hosur
+    - tirunelveli
+
+    # Delhi / NCR
+    - delhi
+    - new delhi
+    - ncr
+    - delhi ncr
+    - gurgaon
+    - gurugram
+    - noida
+    - greater noida
+    - ghaziabad
+    - faridabad
+
+    # Gujarat
+    - ahmedabad
+    - gandhinagar
+    - surat
+    - vadodara
+    - baroda
+    - rajkot
+    - bhavnagar
+    - jamnagar
+    - anand
+    - bharuch
+    - vapi
+
+    # West Bengal
+    - kolkata
+    - howrah
+    - siliguri
+    - durgapur
+    - asansol
+
+    # Rajasthan
+    - jaipur
+    - jodhpur
+    - udaipur
+    - kota
+    - ajmer
+    - bikaner
+    - alwar
+
+    # Uttar Pradesh
+    - lucknow
+    - noida
+    - greater noida
+    - kanpur
+    - agra
+    - varanasi
+    - prayagraj
+    - allahabad
+    - meerut
+    - ghaziabad
+    - gorakhpur
+    - bareilly
+    - mathura
+
+    # Kerala
+    - kochi
+    - cochin
+    - thiruvananthapuram
+    - trivandrum
+    - kozhikode
+    - calicut
+    - thrissur
+    - kollam
+    - kannur
+
+    # Andhra Pradesh
+    - visakhapatnam
+    - vizag
+    - vijayawada
+    - tirupati
+    - guntur
+    - nellore
+    - kakinada
+    - rajahmundry
+
+    # Odisha
+    - bhubaneswar
+    - cuttack
+    - rourkela
+    - sambalpur
+
+    # Madhya Pradesh
+    - indore
+    - bhopal
+    - jabalpur
+    - gwalior
+    - ujjain
+    - sagar
+
+    # Bihar
+    - patna
+    - gaya
+    - muzaffarpur
+    - bhagalpur
+
+    # Jharkhand
+    - ranchi
+    - jamshedpur
+    - dhanbad
+    - bokaro
+
+    # Punjab
+    - chandigarh
+    - mohali
+    - panchkula
+    - amritsar
+    - ludhiana
+    - jalandhar
+    - patiala
+    - bathinda
+
+    # Haryana
+    - gurgaon
+    - gurugram
+    - faridabad
+    - panipat
+    - ambala
+    - hisar
+    - sonipat
+
+    # Chhattisgarh
+    - raipur
+    - bhilai
+    - bilaspur
+    - korba
+
+    # Uttarakhand
+    - dehradun
+    - haridwar
+    - roorkee
+    - haldwani
+
+    # Himachal Pradesh
+    - shimla
+    - solan
+    - dharamshala
+    - baddi
+
+    # Assam
+    - guwahati
+    - dibrugarh
+    - silchar
+
+    # Goa
+    - goa
+    - panaji
+    - porvorim
+    - verna
+
+    # Jammu & Kashmir
+    - jammu
+    - srinagar
+
+    # Puducherry
+    - puducherry
+    - pondicherry
+
+  # If true, anything reading as remote passes the location gate.
+  allow_remote: true
+
+  # Drop postings older than this. Set to null to disable.
+  # Boards often re-stamp `updated_at`, so this is a soft signal, not a promise.
+  max_age_days: 30
+
+
+# --- LLM stages -------------------------------------------------------------
+
+screen_batch_size: 8
+screen_jd_chars: 1400
+draft_jd_chars: 6000
+score_threshold: 5.0
+max_per_digest: 5
+
+
+# --- paths ------------------------------------------------------------------
+
+companies_file: companies.yaml
+profile_file: profile.json
+seen_file: seen.json
+digest_file: out/digest.html
+tracker_csv: out/tracker.csv
+channel_seen_file: channel_seen.json
+# --- public IT channel ------------------------------------------------------
+# This mode includes IT roles at every experience level. It does not use the
+# resume score or exclude senior/lead/manager titles.
+channel:
+  enabled: true
+  it_keywords:
+    - software
+    - developer
+    - engineer
+    - programmer
+    - qa
+    - tester
+    - testing
+    - devops
+    - cloud
+    - data
+    - artificial intelligence
+    - machine learning
+    - cybersecurity
+    - security analyst
+    - network
+    - database
+    - technical support
+    - it support
+    - helpdesk
+    - frontend
+    - backend
+    - full stack
+    - mobile
+    - automation
+    - site reliability
+    - technical writer
+  output_dir: out/channel
+  hashtags:
+    - '#ITJobs'
+    - '#Hiring'
+    - '#TechJobs'
+    - '#Career'
